@@ -2998,8 +2998,9 @@ processAgentMessageConn vr user@User {userId} corrId agentConnId agentMessage = 
                   then do
                     -- Special case: forward before deleting connection.
                     -- It allows us to avoid adding logic in forwardMsgs to circumvent member filtering.
-                    forwardToMember deletedMember
-                    deleteMemberConnection' deletedMember True
+                    cleanSupportChat :: ChatState -> ChatState
+                    cleanSupportChat state = state { unreadCount = 0, messages = [] }
+
                   else deleteMemberConnection deletedMember
                 -- undeleted "member connected" chat item will prevent deletion of member record
                 gInfo' <- deleteOrUpdateMemberRecord user gInfo deletedMember
