@@ -3305,3 +3305,10 @@ processAgentMessageConn vr user@User {userId} corrId agentConnId agentMessage = 
                   else pure Nothing
               else pure Nothing
           _ -> pure Nothing
+          cleanSupportChat :: ChatState -> ChatState
+cleanSupportChat state = state { unreadCount = 0, messages = [] }
+  deleteSupportChat :: IO ()
+          deleteSupportChat = modifyChatState cleanSupportChat
+
+
+        
